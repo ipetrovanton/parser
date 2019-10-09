@@ -1,0 +1,13 @@
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\ContractParser.exe.config
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\ContractParser.exe
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\ContractParser.pdb
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\HtmlAgilityPack.dll
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\WebDriver.dll
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\HtmlAgilityPack.xml
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\WebDriver.xml
+C:\Users\ipetr\source\repos\ContractParser\obj\Debug\ContractParser.csproj.CopyComplete
+C:\Users\ipetr\source\repos\ContractParser\obj\Debug\ContractParser.exe
+C:\Users\ipetr\source\repos\ContractParser\obj\Debug\ContractParser.pdb
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\ContractParser.exe.CodeAnalysisLog.xml
+C:\Users\ipetr\source\repos\ContractParser\bin\Debug\ContractParser.exe.lastcodeanalysissucceeded

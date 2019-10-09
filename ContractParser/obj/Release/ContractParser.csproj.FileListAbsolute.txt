@@ -1,0 +1,11 @@
+C:\Users\ipetr\source\repos\ContractParser\bin\Release\ContractParser.exe.config
+C:\Users\ipetr\source\repos\ContractParser\bin\Release\ContractParser.exe
+C:\Users\ipetr\source\repos\ContractParser\bin\Release\ContractParser.pdb
+C:\Users\ipetr\source\repos\ContractParser\bin\Release\HtmlAgilityPack.dll
+C:\Users\ipetr\source\repos\ContractParser\bin\Release\WebDriver.dll
+C:\Users\ipetr\source\repos\ContractParser\bin\Release\HtmlAgilityPack.pdb
+C:\Users\ipetr\source\repos\ContractParser\bin\Release\HtmlAgilityPack.xml
+C:\Users\ipetr\source\repos\ContractParser\bin\Release\WebDriver.xml
+C:\Users\ipetr\source\repos\ContractParser\obj\Release\ContractParser.csproj.CopyComplete
+C:\Users\ipetr\source\repos\ContractParser\obj\Release\ContractParser.exe
+C:\Users\ipetr\source\repos\ContractParser\obj\Release\ContractParser.pdb
