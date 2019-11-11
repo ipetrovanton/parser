@@ -1,0 +1,2 @@
+[1022/194540.798:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[1022/194540.804:ERROR:exception_snapshot_win.cc(98)] thread ID 1280 not found in process

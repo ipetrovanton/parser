@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\ContractParser",
+    "\\ContractParser\\bin",
+    "\\ContractParser\\bin\\Debug",
+    "\\ContractParser\\obj",
+    "\\ContractParser\\obj\\Debug",
+    "\\ContractParser\\obj\\Release"
+  ],
+  "SelectedNode": "\\ContractParser\\bin\\Debug\\BouncyCastle.Crypto.dll",
+  "PreviewInSolutionExplorer": false
+}

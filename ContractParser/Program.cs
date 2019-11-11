@@ -6,20 +6,23 @@ using OpenQA.Selenium.Chrome;
 using HtmlAgilityPack;
 using System.Text;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Data.Entity;
+
 
 namespace Parser
-{
+{ 
     class Program
     {
-        static void Main(string[] args)
+        private const string stratProgram = "Program is started!";
+
+        static void Main()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Console.WriteLine("Program is started!");
+            Console.WriteLine(stratProgram);
             Parser parser = new Parser();
             parser.writeData();
-            parser.createTable();
+            parser.CreateTable();
             Console.ReadLine();
-
         }
 
     }
@@ -108,7 +111,7 @@ namespace Parser
             };
 
 
-            // Some contracts hav not date of end therefore we need to parse such cases differently
+            // Some contracts have not date of end therefore we need to parse such cases differently
             string st = "/html/body/form/section[2]/div/div/div[1]/div[3]/div/div[1]/div[2]/div[3]";
             HtmlNodeCollection data = document.DocumentNode.SelectNodes(st);
             foreach (HtmlNode d in data)
@@ -235,7 +238,7 @@ namespace Parser
         /*
          * Function for preparation excel table
          */
-        public void createTable()
+        public void CreateTable()
         {
             ex.Visible = true;
             ex.SheetsInNewWorkbook = 1;
@@ -321,30 +324,59 @@ namespace Parser
                 Console.WriteLine("You enter invalid value, therefore we are parcing 10 pages");
             }
         }
-        // Function for creation .html-files for each pages which you want to parse
-        public void CreateFiles()
-        {
-            Console.WriteLine("Start of file creation!");
-            // Loop for downloading html-pages and writing them to files
-            for (int i = 1; i <= numberOfPages; i++)
-            {
-                // names of files for each pages
-                string filename = i + ".html";
-                // uri-adress for downloading pages.
-                string url =
-                    "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?" +
-                    "searchString=&morphology=on&search-filter=&pageNumber=" +
-                    i + "&sortDirection=false&recordsPerPage=_10&showLotsInfoHidden=false&fz44=on&" +
-                    "fz223=on&sortBy=UPDATE_DATE&af=on&ca=on&pc=on&pa=on&placingWaysList=&placingWaysList223=" +
-                    "&placingChildWaysList=&publishDateFrom=&publishDateTo=&applSubmissionCloseDate=&priceFromGeneral=" +
-                    "&priceFromGWS=&priceFromUnitGWS=&priceToGeneral=&priceToGWS=&priceToUnitGWS=&currencyIdGeneral=" +
-                    "-1&advancePercentFrom=&advancePercentTo=&priceContractAdvantages44=&priceContractAdvantages94=" +
-                    "&requirementsToPurchase44=&orderPlacement94_0=&orderPlacement94_1=&orderPlacement94_2=&contractStageList_0=on" +
-                    "&contractStageList_1=on&contractStageList_2=on&contractStageList_3=on&contractStageList=0%2C1%2C2%2C3&npaHidden=" +
-                    "&restrictionsToPurchase44=&extAttSearchEnable=false&selectedExtAttrCustomerId=";
 
-                // open link in browser
-                driver.Url = url;
+        /*
+         * Function for download one html page. 
+         * It's necessary for avoiding of downloading pages without data
+         */
+
+        private void onePage(int i)
+        {
+            // names of files for each pages
+            string filename = i + ".html";
+            // uri-adress for downloading pages.
+            string url =
+                "http://zakupki.gov.ru/epz/order/extendedsearch/results.html?" +
+                "searchString=&morphology=on&search-filter=&pageNumber=" +
+                i + "&sortDirection=false&recordsPerPage=_10&showLotsInfoHidden=false&fz44=on&" +
+                "fz223=on&sortBy=UPDATE_DATE&af=on&ca=on&pc=on&pa=on&placingWaysList=&placingWaysList223=" +
+                "&placingChildWaysList=&publishDateFrom=&publishDateTo=&applSubmissionCloseDate=&priceFromGeneral=" +
+                "&priceFromGWS=&priceFromUnitGWS=&priceToGeneral=&priceToGWS=&priceToUnitGWS=&currencyIdGeneral=" +
+                "-1&advancePercentFrom=&advancePercentTo=&priceContractAdvantages44=&priceContractAdvantages94=" +
+                "&requirementsToPurchase44=&orderPlacement94_0=&orderPlacement94_1=&orderPlacement94_2=&contractStageList_0=on" +
+                "&contractStageList_1=on&contractStageList_2=on&contractStageList_3=on&contractStageList=0%2C1%2C2%2C3&npaHidden=" +
+                "&restrictionsToPurchase44=&extAttSearchEnable=false&selectedExtAttrCustomerId=";
+
+            // open link in browser
+            driver.Url = url;
+
+            // loop for reloading some page
+            for (int k = 0;; k++)
+            {
+                k++;
+                try {
+                    // try to find the number of the state contract to ensure the page was downloaded
+                    IWebElement element = driver.
+                        FindElement(By.
+                        XPath("/html/body/form/section[2]/div/div/div[1]/div" +
+                        "[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/a"));
+                    Console.WriteLine(element);
+                } catch
+                {
+                    if (k < 10)
+                    {
+                        continue;
+                    }
+                    else if (k == 10)
+                    {
+                        Console.WriteLine($"The page number {i} unable to load becouse zakupki.gov.ru has bugs again!");
+                        Troubles.numbersOfBadPages.Add(i);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
                 // html page in string is prepared for writing in file
                 string html = driver.PageSource;
                 // log of writing file
@@ -352,8 +384,47 @@ namespace Parser
                 File.WriteAllText(filename, html);
                 nameOfFiles.Add(filename);
                 Console.WriteLine("File " + filename + " created");
+                break;
+            }
+            
+        }
+
+        // Function for creation .html-files for each pages which you want to parse
+        public void CreateFiles()
+        {
+            Console.WriteLine("Start of file creation!");
+
+            // Loop for downloading html-pages and writing them to files
+            for (int i = 1; i <= numberOfPages; i++)
+            {
+                onePage(i);
+            }
+            Console.WriteLine("***********************************");
+            Console.WriteLine($"Total number of bad pages is {Troubles.numberOfBadPages()}!");
+            if (Troubles.numberOfBadPages() != 0)
+            {
+                Troubles.printBadPages();
             }
         }
 
+    }
+    class Troubles
+    {
+        public static List<int> numbersOfBadPages = new List<int>();
+        public static int numberOfBadPages()
+        {
+            return numbersOfBadPages.Count;
+
+        }
+        public static void printBadPages()
+        {
+            Console.WriteLine("***********************************");
+            Console.WriteLine("Follow pages were not downloaded!");
+            foreach(int number in numbersOfBadPages)
+            {
+                Console.WriteLine(number);
+            }
+            Console.WriteLine("***********************************");
+        }
     }
 }
