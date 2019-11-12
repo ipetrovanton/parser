@@ -6,11 +6,10 @@ using OpenQA.Selenium.Chrome;
 using HtmlAgilityPack;
 using System.Text;
 using Excel = Microsoft.Office.Interop.Excel;
-using System.Data.Entity;
-
+using ContractParser;
 
 namespace Parser
-{ 
+{
     class Program
     {
         private const string stratProgram = "Program is started!";
@@ -21,14 +20,35 @@ namespace Parser
             Console.WriteLine(stratProgram);
             Parser parser = new Parser();
             parser.writeData();
-            parser.CreateTable();
-            Console.ReadLine();
+            string choice;
+            Console.Write("What do you want? \n" +
+                "Press D to save to DB \n" +
+                "Press E to save to Excel tabel\n" +
+                "Press B to choose both.\n" +
+                "Your choese: ");
+            choice = Console.ReadLine();
+            choice = choice.ToUpper();
+            switch (choice)
+            {
+                case "D":
+                    parser.saveDataToDB();
+                    break;
+                case "E":
+                    parser.CreateTable();
+                    break;
+                default:
+                    parser.CreateTable();
+                    parser.saveDataToDB();
+                    break;
+            }
+            /*parser.CreateTable();
+            parser.saveDataToDB();*/
         }
 
     }
 
     /*
-     * This class cosists of 
+     * This class consists of 
      * methods for parsing html-pages into arrays
      * for use it for writing in excel-table
      */
@@ -291,6 +311,21 @@ namespace Parser
             }
 
         }
+
+        public void saveDataToDB()
+        {
+            SaveToDB.SaveDB(
+                numberOfPurchase,
+                customerName,
+                dateOfEnd,
+                dateOfPurchase,
+                purchaseName,
+                purchaisingType,
+                purchaisingSection,
+                startPrice,
+                status
+                );
+        }
     }
 
 
@@ -351,17 +386,19 @@ namespace Parser
             driver.Url = url;
 
             // loop for reloading some page
-            for (int k = 0;; k++)
+            for (int k = 0; ; k++)
             {
                 k++;
-                try {
+                try
+                {
                     // try to find the number of the state contract to ensure the page was downloaded
                     IWebElement element = driver.
                         FindElement(By.
                         XPath("/html/body/form/section[2]/div/div/div[1]/div" +
                         "[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/a"));
                     Console.WriteLine(element);
-                } catch
+                }
+                catch
                 {
                     if (k < 10)
                     {
@@ -386,7 +423,7 @@ namespace Parser
                 Console.WriteLine("File " + filename + " created");
                 break;
             }
-            
+
         }
 
         // Function for creation .html-files for each pages which you want to parse
@@ -420,7 +457,7 @@ namespace Parser
         {
             Console.WriteLine("***********************************");
             Console.WriteLine("Follow pages were not downloaded!");
-            foreach(int number in numbersOfBadPages)
+            foreach (int number in numbersOfBadPages)
             {
                 Console.WriteLine(number);
             }

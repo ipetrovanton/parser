@@ -78,6 +78,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -91,14 +92,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBmodel\ContractNumber.cs" />
+    <Compile Include="DBmodel\CustomerName.cs" />
+    <Compile Include="DBmodel\DataBase.cs" />
+    <Compile Include="DBmodel\DateOfEnd.cs" />
+    <Compile Include="DBmodel\DateOFPurchase.cs" />
+    <Compile Include="DBmodel\PurchaseName.cs" />
+    <Compile Include="DBmodel\PurchaseType.cs" />
+    <Compile Include="DBmodel\Section.cs" />
+    <Compile Include="DBmodel\StartPrice.cs" />
+    <Compile Include="DBmodel\Status.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveToDB.cs" />
   </ItemGroup>
   <ItemGroup>
-    <AdditionalFiles Include="..\DependencyValidation1\DependencyValidation2.layerdiagram">
-      <Link>DependencyValidation2.layerdiagram</Link>
-      <Visible>False</Visible>
-    </AdditionalFiles>
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />

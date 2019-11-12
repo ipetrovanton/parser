@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContractParser", "ContractParser.csproj", "{0523CFC0-7509-47A2-8C11-C8C70EEC6EBD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CDF06877-082B-425D-BD11-C31270919996} = {CDF06877-082B-425D-BD11-C31270919996}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{86267C01-07BD-49F6-A8DE-873020D1D91D}"
 EndProject
